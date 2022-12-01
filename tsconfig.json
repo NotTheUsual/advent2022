@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "strict": true,
+    "sourceMap": false,
+    "outDir": "dist",
+    "typeRoots": ["./types", "./node_modules/@types"]
+  },
+  "include": ["days/**/*.ts","example/**/*.ts"],
+  "exclude": ["node_modules", "types", "**/*.spec.ts", "**/*.test.ts", "**/*.input.ts", "scripts"]
+}
