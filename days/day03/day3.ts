@@ -1,13 +1,11 @@
+import { intersection } from '../../utils/utils';
+
 interface Backpack {
   firstHalf: Set<string>;
   secondHalf: Set<string>;
 }
 
 const dumbPriorityLookup = '*abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-const intersection = <TItem>(set1: Set<TItem>, set2: Set<TItem>): Set<TItem> => {
-  return new Set([...set1].filter(item => set2.has(item)));
-};
 
 const calculatePriorityFor = (backpack: Backpack): number => {
   return [...intersection(backpack.firstHalf, backpack.secondHalf)]
