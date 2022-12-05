@@ -63,6 +63,19 @@ const performInstructions = ({ stacks, instructions }: ParsedInput): Stacks => {
   return clonedStacks;
 }
 
+const performInstructions9001 = ({ stacks, instructions }: ParsedInput): Stacks => {
+  const clonedStacks = JSON.parse(JSON.stringify(stacks)) as Stacks;
+  instructions.forEach((instruction) => {
+    const moves: string[] = [];
+    times(instruction.number).do(() => {
+      const movedCrate = clonedStacks[instruction.start].pop()!;
+      moves.unshift(movedCrate);
+    });
+    moves.forEach((move) => clonedStacks[instruction.end].push(move))
+  });
+  return clonedStacks;
+}
+
 const grabResultFrom = (stacks: Stacks): string => {
   return stacks
     .filter(isPresent)
@@ -74,5 +87,11 @@ const grabResultFrom = (stacks: Stacks): string => {
 export function solvePart1 (input: string): string {
   const { stacks, instructions } = parseInput(input);
   const updatedStacks = performInstructions({ stacks, instructions });
+  return grabResultFrom(updatedStacks);
+}
+
+export function solvePart2 (input: string): string {
+  const { stacks, instructions } = parseInput(input);
+  const updatedStacks = performInstructions9001({ stacks, instructions });
   return grabResultFrom(updatedStacks);
 }
