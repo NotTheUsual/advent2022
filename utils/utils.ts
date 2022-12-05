@@ -13,3 +13,13 @@ export const createRange = (from: number, to: number): number[] => {
   }
   return range;
 };
+
+export const times = (count: number) => {
+  return {
+    do: (callback: () => void) => {
+      for (let number = 0; number < count; number += 1) {
+        callback();
+      }
+    }
+  }
+}
