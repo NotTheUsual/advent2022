@@ -1,4 +1,4 @@
-import { solvePart1 } from './day6';
+import { solvePart1, solvePart2 } from './day6';
 import day6Input from './day6.input';
 
 describe('Day 6', () => {
@@ -31,6 +31,38 @@ describe('Day 6', () => {
     test('real puzzle', () => {
       const result = solvePart1(day6Input);
       expect(result).toBe(1210);
+    });
+  });
+
+  describe('part 1', () => {
+    test('test case 1', () => {
+      const input = 'mjqjpqmgbljsphdztnvjfqwrcgsmlb'
+      expect(solvePart2(input)).toBe(19);
+    });
+    
+    test('test case 2', () => {
+      const input = 'bvwbjplbgvbhsrlpgdmjqwftvncz'
+      expect(solvePart2(input)).toBe(23);
+    });
+
+    test('test case 3', () => {
+      const input = 'nppdvjthqldpwncqszvftbrmjlhg'
+      expect(solvePart2(input)).toBe(23);
+    });
+
+    test('test case 4', () => {
+      const input = 'nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg'
+      expect(solvePart2(input)).toBe(29);
+    });
+
+    test('test case 5', () => {
+      const input = 'zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw'
+      expect(solvePart2(input)).toBe(26);
+    });
+
+    test('real puzzle', () => {
+      const result = solvePart2(day6Input);
+      expect(result).toBe(3476);
     });
   });
 });
