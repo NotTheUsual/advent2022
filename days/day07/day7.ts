@@ -100,3 +100,21 @@ export function solvePart1 (input: string): number {
   const directories = smallDirectories(directoryStructure);
   return totalSize(directories);
 }
+
+const TOTAL_DISK_SPACE = 70000000;
+const REQUIRED_FREE_SPACE = 30000000;
+
+export function solvePart2 (input: string): number {
+  const directoryStructure = parseInput(input);
+  const sizes = getDirectorySizes(directoryStructure);
+  const availableSpace = TOTAL_DISK_SPACE - sizes.totalSize;
+  const spaceToClear = REQUIRED_FREE_SPACE - availableSpace;
+
+  return sizes.directories
+    .filter((directory) => {
+      return directory.size >= spaceToClear;
+    })
+    .sort((a, b) => a.size - b.size)
+    [0]
+    .size;
+}
