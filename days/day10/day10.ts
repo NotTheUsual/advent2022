@@ -51,3 +51,31 @@ export function solvePart1 (input: string): number {
   const cycles = run(instructions);
   return getSignalStrength(cycles, 20) + getSignalStrength(cycles, 60) + getSignalStrength(cycles, 100) + getSignalStrength(cycles, 140) + getSignalStrength(cycles, 180) + getSignalStrength(cycles, 220)
 }
+
+const drawOutput = (cycles: number[]): string => {
+  const pixels: string[] = [];
+
+  cycles.forEach((X, cycle) => {
+    if (cycle === 0) return;
+    if (cycle === 241) return;
+    const cursor = (cycle - 1) % 40;
+    const diff = Math.abs(X - cursor);
+    if (diff <= 1) {
+      pixels.push('#');
+    } else {
+      pixels.push('.');
+    }
+  })
+
+  return pixels.map((pixel, index) => {
+    return ((index + 1) % 40 === 0) ? `${pixel}\n` : pixel;
+  }).join('');
+};
+
+export function solvePart2 (input: string): string {
+  const instructions = parseInput(input);
+  const cycles = run(instructions);
+  const output = drawOutput(cycles);
+  // console.log(output)
+  return output;
+}
