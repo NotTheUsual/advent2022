@@ -83,3 +83,33 @@ export function solvePart1 (input: string): number {
   const instructions = parseInput(input);
   return countTailPositions(instructions);
 }
+
+const countTailPositionsAgain = (instructions: Instruction[]): number => {
+  // This should be an array or something
+  const rope: Point[] = [];
+  times(10).do(() => rope.push(new Point({ x: 0, y: 0 })));
+  let tailPositions = new Set<string>([rope[9].key]);
+
+  for (const instruction of instructions) {
+    times(instruction.steps).do(() => {
+      rope.forEach((point, index) => {
+        if (index === 0) {
+          rope[0] = point.move(instruction.direction);
+        } else {
+          const leader = rope[index - 1];
+          if (point.adjacentTo(leader)) return;
+          rope[index] = point.moveToward(leader);
+        }
+
+        if (index === 9) tailPositions.add(rope[9].key);
+      });
+    });
+  }
+
+  return tailPositions.size;
+};
+
+export function solvePart2 (input: string): number {
+  const instructions = parseInput(input);
+  return countTailPositionsAgain(instructions);
+}
