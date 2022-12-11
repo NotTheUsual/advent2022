@@ -1,5 +1,6 @@
 import theredoc from 'theredoc';
 import { solvePart1 } from './day11';
+import { solvePart2 } from './day11b';
 import day11Input from './day11.input';
 
 describe('Day 11', () => {
@@ -40,6 +41,46 @@ describe('Day 11', () => {
     test('real puzzle', () => {
       const result = solvePart1(day11Input);
       expect(result).toBe(101436);
+    });
+  });
+
+  describe('part 1', () => {
+    test('test case', () => {
+      const input = theredoc`
+      Monkey 0:
+          Starting items: 79, 98
+          Operation: new = old * 19
+          Test: divisible by 23
+            If true: throw to monkey 2
+            If false: throw to monkey 3
+        
+        Monkey 1:
+          Starting items: 54, 65, 75, 74
+          Operation: new = old + 6
+          Test: divisible by 19
+            If true: throw to monkey 2
+            If false: throw to monkey 0
+        
+        Monkey 2:
+          Starting items: 79, 60, 97
+          Operation: new = old * old
+          Test: divisible by 13
+            If true: throw to monkey 1
+            If false: throw to monkey 3
+        
+        Monkey 3:
+          Starting items: 74
+          Operation: new = old + 3
+          Test: divisible by 17
+            If true: throw to monkey 0
+            If false: throw to monkey 1
+      `;
+      expect(solvePart2(input)).toBe(2713310158);
+    });
+
+    test('real puzzle', () => {
+      const result = solvePart2(day11Input);
+      expect(result).toBe(19754471646);
     });
   });
 });
