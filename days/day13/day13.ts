@@ -1,5 +1,6 @@
 type Item = number | Array<Item>;
-type Pair = [Array<Item>, Array<Item>];
+type Packet = Array<Item>;
+type Pair = [Packet, Packet];
 type LargerResult = 'left' | 'right' | 'neither';
 
 const parseInput = (input: String): Array<Pair> => {
@@ -30,7 +31,7 @@ const compareItems = (left: Item, right: Item): LargerResult => {
   return 'neither';
 }
 
-const compareList = (left: Array<Item>, right: Array<Item>): LargerResult => {
+const compareList = (left: Packet, right: Packet): LargerResult => {
   const maxLength = Math.max(left.length, right.length);
   for (let index = 0; index < maxLength; index += 1) {
     if (left[index] === undefined) return 'right';
@@ -56,6 +57,40 @@ const grabCorrectPairIndices = (pairs: Array<Pair>): number[] => {
 export function solvePart1 (input: string): number {
   const pairs = parseInput(input);
   const correct = grabCorrectPairIndices(pairs);
-  console.log({ correct });
   return correct.reduce((sum, index) => sum + index);
+}
+
+const sortPackets = (pairs: Array<Pair>): Array<Packet> => {
+  const dividerPackets: Array<Packet> = [[[2]], [[6]]];
+  const packets = pairs.flat().concat(dividerPackets);
+  return packets.sort((packetA, packetB) => {
+    const result = compareList(packetA, packetB);
+    switch (result) {
+      case 'left': return 1;
+      case 'neither': return 0;
+      case 'right': return -1;
+    }
+  });
+}
+
+const getDecoderKeyFrom = (packets: Array<Packet>): number => {
+  let twoIndex = 0;
+  let sixIndex = 0;
+  packets.find((packet, index) => {
+    const packetAsString = JSON.stringify(packet);
+    if (packetAsString === '[[2]]') {
+      twoIndex = index + 1;
+    }
+    if (packetAsString === '[[6]]') {
+      sixIndex = index + 1;
+      return true;
+    }
+  });
+  return twoIndex * sixIndex;
+};
+
+export function solvePart2 (input: string): number {
+  const pairs = parseInput(input);
+  const sorted = sortPackets(pairs);
+  return getDecoderKeyFrom(sorted);
 }
